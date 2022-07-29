@@ -10,8 +10,99 @@ We will be using the UCI Bike sharing dataset <br />
 Partculary we will focus on datadrift which is a type of model drift .The description is mentioned in the previous section <br />
 If we elaborate evidently it works on the mentioned ways. <br />
 ![alt text](https://github.com/AbhiLegend/Images/blob/main/model%20drift/ed.PNG) <br />
+## Model Quality <br />
+We have a model running.Using Evidently library we are able to evaluate the model quality and get all the performance so track where the model fails <br />
+## Data Drift 
+As the ml model runs,we are bound to get get model drift specifically we are focussing on a type of model drift named as data drift. <br />
+Using evidently library we are able to run the statistical tests through which we can compare the input feature distributions and visually explore the drift. <br />
+## Target Drift
+Over the time applying evidently library we can do a good examination,we can see how model predictions and target behaviour change over the time. <br />
+## Data Quality 
+As the model runs,we can apply evidently library to get a complete snapshot of of data health and get inside deeper to explore feature behaviour and statistical properties.<br />
+
+
 ## How to check for a drift within a production model
 We will be using fastapi and the production model needs to be deployed in heroku.For proper and ease of deployment we will use github <br />
+Make sure we have a github account,heroku account ready. <br />
+We need to fork the starter code.Accordingly we will also work on the exercise too <br />
+The repo contains the following <br />
+1)Static folder("Within that all the HTML reports will be generated in Heroku"). <br />
+2)A Procfile to get all necessary commands working in Heroku. <br />
+3)main.py python file that contains all the programming logic and code for training the data as well as checking the drift <br />
+4)requirements.txt file that contains all the libraries to be installed in heroku <br />
+5)runtime.txt file that contains which python runtime that needs to be installed in heroku <br />
+Exercise <br />
+Q1) What are the necessary import files for FASTAPI to be included in main.py file <br />
+1> from fastapi import FastAPI and from fastapi.staticfiles import StaticFiles <br />
+2> from fastapi import FastAPIs <br />
+3>No need to import FASTAPI <br />
+4)from fastapi import APIRouter <br />
+Answer:1> <br />
+Q2)To get going with evidently which library needs to be added to requirements.txt file <br />
+1> evidently==0.1.53.dev0 <br />
+2> evidently==1 <br />
+3> None of these <br />
+Answer 1>  <br />
+Q3>To get going with evidently dashboard which import is necessary in main.py file <br />
+1>import requests <br />
+2>import io <br />
+3>from evidently.dashboard import Dashboard <br />
+Answer 3> <br />
+## Model training and implementing evidently for performance 
+For the Dataset we will be using Bike sharing data from UCI <br />
+We are not getting in deep into the model creation code as it has been covered.The main.py file works on monitoring bicycle demand data.We unzip the file start <br />
+reading it pandas dataframe.After that we start building the regression model with training . <br />
+Model performance part is the most important phase where we implement evidently.
+First we do column mapping in main.py file <br />
+
+```
+column_mapping = ColumnMapping()
+
+column_mapping.target = target
+column_mapping.prediction = prediction
+column_mapping.numerical_features = numerical_features
+column_mapping.categorical_features = categorical_features
+```
+
+To get the performance and see the dashboard the following code is needed <br />
+```
+regression_perfomance_dashboard = Dashboard(tabs=[RegressionPerformanceTab()])
+regression_perfomance_dashboard.calculate(reference, None, column_mapping=column_mapping)
+regression_perfomance_dashboard.save('reports/regression_performance_at_training.html')
+```
+Exercise
+As we have already given the code for week1 results of regression performance similarly write the code for week 2 and week 3 so that the html reports are generated <br />
+Solution <br />
+The updated main.py is in the fast7 repo <br />
+## Data Drift
+Full illustration of Data drift [a link] (https://github.com/evidentlyai/evidently/blob/main/docs/book/dashboards/generate_dashboards.md) <br />
+Calculating Datadrift within our main.py file <br />
+```
+column_mapping = ColumnMapping()
+
+column_mapping.numerical_features = numerical_features
+
+data_drift_dashboard = Dashboard(tabs=[DataDriftTab()])
+data_drift_dashboard.calculate(reference, current.loc['2011-01-29 00:00:00':'2011-02-07 23:00:00'], 
+                                   column_mapping=column_mapping)
+                                   
+data_drift_dashboard.save("./static/data_drift_dashboard_after_week1.html")
+```
+
+Exercise  <br />
+Calculate Data drift for week 2 <br />
+Solution <br />
+The complete solution is provided at manin.py in the fast7 repo <br />
+Save the file in github ,deploy it in heroku.We have implemented a complete ml model deployment checking all the parameters for model drifting and modifying code as <br />
+we have already made the automatic code deployment for CD we are able to change the code directly in github and oberve the changes in the model deployed in heroku. <br />
+
+
+
+
+
+
+
+
 
 # Understanding the Evidently Data Drift Dashboard
 ## Data Drift Table
