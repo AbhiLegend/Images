@@ -1,4 +1,18 @@
 # Images
+## Evidently and monitoring production models
+We have created our ml models but to get them to production is always tough <br />
+As with time the model degrades.For analysing the model drift we need realtime monitoring. <br />
+Evidently is such a tool/library that helps us analyse and track data and ml models for the lifecycle. <br />
+## Model Scoring and model drift
+For showing model scoring and model drift we need evidently library.We will work on a regression process ml model to be deployed in hroku. <br />
+We will be using the UCI Bike sharing dataset <br />
+## More on Model drift with respect to evidently library
+Partculary we will focus on datadrift which is a type of model drift .The description is mentioned in the previous section <br />
+If we elaborate evidently it works on the mentioned ways. <br />
+![alt text](https://github.com/AbhiLegend/Images/blob/main/model%20drift/ed.PNG) <br />
+## How to check for a drift within a production model
+We will be using fastapi and the production model needs to be deployed in heroku.For proper and ease of deployment we will use github <br />
+
 # Understanding the Evidently Data Drift Dashboard
 ## Data Drift Table
 ![alt text](https://github.com/AbhiLegend/Images/blob/main/model%20drift/df.PNG) <br />
